@@ -16,7 +16,7 @@
 
         public Guid RegionId { get; set; }
 
-        //Navigation property one to one relationship
+        //Navigation properties one to one relationship between walk and difficulty and walk and region ..this two properties are non nullable 
 
         public Difficulty Difficulty { get; set; }
 

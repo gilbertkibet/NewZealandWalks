@@ -7,7 +7,6 @@ namespace NewZealandWalks.API.Infrastructure.Data
     {
         public NewZealandWalksDbContext(DbContextOptions<NewZealandWalksDbContext> options) : base(options)
         {
-
         }
 
         public DbSet<Difficulty> Difficulties { get; set; }
