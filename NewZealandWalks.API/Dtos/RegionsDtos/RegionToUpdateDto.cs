@@ -1,6 +1,6 @@
-﻿namespace NewZealandWalks.API.Dtos
+﻿namespace NewZealandWalks.API.Dtos.RegionsDtos
 {
-    public class RegionToCreateDto
+    public class RegionToUpdateDto
     {
         public string Code { get; set; }
 

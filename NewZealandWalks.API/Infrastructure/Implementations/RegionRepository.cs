@@ -17,7 +17,9 @@ namespace NewZealandWalks.API.Infrastructure.Implementations
         public async Task<Region> CreateRegionAsync(Region region)
         {
             await _context.Regions.AddAsync(region);
+
             await _context.SaveChangesAsync();
+
             return region;
         }
 

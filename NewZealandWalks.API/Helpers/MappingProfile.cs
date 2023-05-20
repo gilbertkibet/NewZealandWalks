@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using NewZealandWalks.API.Core.Entities;
-using NewZealandWalks.API.Dtos;
+using NewZealandWalks.API.Dtos.RegionsDtos;
 
 namespace NewZealandWalks.API.Helpers
 {
@@ -8,9 +8,9 @@ namespace NewZealandWalks.API.Helpers
     {
         public MappingProfile()
         {
-            CreateMap<Region, RegionToDisplayDto>().ReverseMap();
-            CreateMap<RegionToCreateDto, Region>().ReverseMap();
-            CreateMap<RegionToUpdateDto, Region>().ReverseMap();
+            CreateMap<Region, RegionToDisplayDto>().ReverseMap();//for get
+            CreateMap<RegionToCreateDto, Region>().ReverseMap();//for post
+            CreateMap<RegionToUpdateDto, Region>().ReverseMap();//for put
         }
     }
 }

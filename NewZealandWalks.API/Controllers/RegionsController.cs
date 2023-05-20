@@ -2,8 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using NewZealandWalks.API.Core.Entities;
 using NewZealandWalks.API.Core.Repository;
-using NewZealandWalks.API.Dtos;
-using NewZealandWalks.API.Infrastructure.Data;
+using NewZealandWalks.API.Dtos.RegionsDtos;
 
 namespace NewZealandWalks.API.Controllers
 {
@@ -11,21 +10,26 @@ namespace NewZealandWalks.API.Controllers
     [ApiController]
     public class RegionsController : ControllerBase
     {
-        private readonly NewZealandWalksDbContext _context;
         private readonly IRegionRepository _regionRepository;
+
         private readonly IMapper _mapper;
 
-        public RegionsController(NewZealandWalksDbContext context, IRegionRepository regionRepository, IMapper mapper)
+        public RegionsController(IRegionRepository regionRepository, IMapper mapper)
         {
-            _context = context;
 
             _regionRepository = regionRepository;
 
             _mapper = mapper;
         }
+        //GET:https://localhost:portnumber/api/regions
         [HttpGet]
-        public async Task<IActionResult> GetAllRegions()
+        public async Task<IActionResult> GetAll()
         {
+            //get data from database
+            //map the domain models to display dtos
+            //in controller level it is destination then source
+            //in mapping profile it is source to destination
+            //return dtos back to the client
             var regions = await _regionRepository.GetAllAsync();
 
             var regionsToDisplay = _mapper.Map<List<RegionToDisplayDto>>(regions);

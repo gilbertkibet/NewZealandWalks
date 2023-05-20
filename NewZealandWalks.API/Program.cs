@@ -14,13 +14,13 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
 
-//connection string
+//getting connection string from the app settings.json
 string connectionString = builder.Configuration.GetConnectionString("NewZealandWalksConnectionString");
 
-//Injecting DbContext
+//Injecting DbContext so that we can later used in our controller or interfaces
 builder.Services.AddDbContext<NewZealandWalksDbContext>(options => options.UseSqlServer(connectionString));
 
-//INJECTIIN REPOSITORY
+//INJECTIIN REPOSITORY so that we can use anywhere in the application
 builder.Services.AddScoped<IRegionRepository, RegionRepository>();
 
 //AUTOMAAPPER
