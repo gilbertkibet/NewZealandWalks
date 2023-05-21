@@ -54,26 +54,29 @@ namespace NewZealandWalks.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateRegion([FromBody] RegionToCreateDto regionToCreateDto)
+        //POST:https://localhost:portnumber/api/regions
+
+        public async Task<IActionResult> Create([FromBody] RegionToCreateDto regionToCreateDto)
         {
+            //map convert dto to domain model
+
             var regionDomainModel = _mapper.Map<Region>(regionToCreateDto);
 
-
-            regionDomainModel = await _regionRepository.CreateRegionAsync(regionDomainModel);
-
+            regionDomainModel = await _regionRepository.CreateAsync(regionDomainModel);
+            //map domain to regiontodisplay dto
             var regionToDisplay = _mapper.Map<RegionToDisplayDto>(regionDomainModel);
 
             return CreatedAtAction(nameof(GetById), new { id = regionDomainModel.Id }, regionToDisplay);
         }
 
-        [HttpPut]
+        [HttpPut]   //PUT:https://localhost:portnumber/api/region/{id}
         [Route("{id:Guid}")]
         public async Task<IActionResult> UpdateRegion([FromRoute] Guid id, [FromBody] RegionToUpdateDto regionToUpdateDto)
         {
             //map dto to domain model
             var regionDomainModel = _mapper.Map<Region>(regionToUpdateDto);
 
-            regionDomainModel = await _regionRepository.UpdateRegionAsync(id, regionDomainModel);
+            regionDomainModel = await _regionRepository.UpdateAsync(id, regionDomainModel);
 
             if (regionDomainModel == null)
             {
@@ -87,7 +90,7 @@ namespace NewZealandWalks.API.Controllers
         }
 
 
-        [HttpDelete]
+        [HttpDelete]  //DELETE:
         [Route("{id:Guid}")]
 
         public async Task<IActionResult> DeleteRegion([FromRoute,] Guid id)
