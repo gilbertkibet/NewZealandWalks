@@ -23,7 +23,8 @@ builder.Services.AddDbContext<NewZealandWalksDbContext>(options => options.UseSq
 //INJECTIIN REPOSITORY so that we can use anywhere in the application
 builder.Services.AddScoped<IRegionRepository, RegionRepository>();
 
-//AUTOMAAPPER
+//AUTOMAAPPER injecting outmapper to the  builder to scan all the mapping when the application starts
+
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 var app = builder.Build();

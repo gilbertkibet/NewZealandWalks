@@ -32,9 +32,7 @@ namespace NewZealandWalks.API.Controllers
             //return dtos back to the client
             var regions = await _regionRepository.GetAllAsync();
 
-            var regionsToDisplay = _mapper.Map<List<RegionToDisplayDto>>(regions);
-
-            return Ok(regionsToDisplay);
+            return Ok(_mapper.Map<List<RegionToDisplayDto>>(regions));
 
         }
         [HttpGet]
@@ -48,9 +46,7 @@ namespace NewZealandWalks.API.Controllers
                 return NotFound();
             }
 
-            var regionToDisplay = _mapper.Map<RegionToDisplayDto>(region);
-
-            return Ok(regionToDisplay);
+            return Ok(_mapper.Map<RegionToDisplayDto>(region));
         }
 
         [HttpPost]
@@ -83,14 +79,13 @@ namespace NewZealandWalks.API.Controllers
                 return NotFound();
             }
 
-            var regionToDisplay = _mapper.Map<RegionToDisplayDto>(regionDomainModel);
-
-            return Ok(regionToDisplay);
+            return Ok(_mapper.Map<RegionToDisplayDto>(regionDomainModel));
 
         }
 
 
-        [HttpDelete]  //DELETE:
+        [HttpDelete]  //DELETE:https:portnumber/api/region
+
         [Route("{id:Guid}")]
 
         public async Task<IActionResult> DeleteRegion([FromRoute,] Guid id)

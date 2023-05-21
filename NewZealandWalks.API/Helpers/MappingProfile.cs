@@ -8,8 +8,8 @@ namespace NewZealandWalks.API.Helpers
     {
         public MappingProfile()
         {
-            CreateMap<Region, RegionToDisplayDto>().ReverseMap();//for get
-            CreateMap<RegionToCreateDto, Region>().ReverseMap();//for post
+            CreateMap<Region, RegionToDisplayDto>().ReverseMap();//for get method source is db and  dest is display dto
+            CreateMap<RegionToCreateDto, Region>().ReverseMap();//for post source to destination
             CreateMap<RegionToUpdateDto, Region>().ReverseMap();//for put
         }
     }
