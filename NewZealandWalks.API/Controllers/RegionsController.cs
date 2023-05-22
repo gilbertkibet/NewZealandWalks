@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using NewZealandWalks.API.Core.Entities;
 using NewZealandWalks.API.Core.Repository;
 using NewZealandWalks.API.Dtos.RegionsDtos;
+using NewZealandWalks.API.Helpers;
 
 namespace NewZealandWalks.API.Controllers
 {
@@ -50,10 +51,12 @@ namespace NewZealandWalks.API.Controllers
         }
 
         [HttpPost]
+        [ValidateModel]
         //POST:https://localhost:portnumber/api/regions
 
         public async Task<IActionResult> Create([FromBody] RegionToCreateDto regionToCreateDto)
         {
+
             //map convert dto to domain model
 
             var regionDomainModel = _mapper.Map<Region>(regionToCreateDto);
@@ -63,11 +66,14 @@ namespace NewZealandWalks.API.Controllers
             var regionToDisplay = _mapper.Map<RegionToDisplayDto>(regionDomainModel);
 
             return CreatedAtAction(nameof(GetById), new { id = regionDomainModel.Id }, regionToDisplay);
+
+
         }
 
         [HttpPut]   //PUT:https://localhost:portnumber/api/region/{id}
+        [ValidateModel]
         [Route("{id:Guid}")]
-        public async Task<IActionResult> UpdateRegion([FromRoute] Guid id, [FromBody] RegionToUpdateDto regionToUpdateDto)
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] RegionToUpdateDto regionToUpdateDto)
         {
             //map dto to domain model
             var regionDomainModel = _mapper.Map<Region>(regionToUpdateDto);
@@ -81,6 +87,7 @@ namespace NewZealandWalks.API.Controllers
 
             return Ok(_mapper.Map<RegionToDisplayDto>(regionDomainModel));
 
+
         }
 
 
@@ -88,7 +95,7 @@ namespace NewZealandWalks.API.Controllers
 
         [Route("{id:Guid}")]
 
-        public async Task<IActionResult> DeleteRegion([FromRoute,] Guid id)
+        public async Task<IActionResult> Delete([FromRoute,] Guid id)
         {
             var regionDomainModel = await _regionRepository.DeleteAsync(id);
 

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using NewZealandWalks.API.Core.Entities;
 using NewZealandWalks.API.Core.Repository;
 using NewZealandWalks.API.Dtos.WalksDtos;
+using NewZealandWalks.API.Helpers;
 
 namespace NewZealandWalks.API.Controllers
 {
@@ -21,6 +22,7 @@ namespace NewZealandWalks.API.Controllers
         }
 
         [HttpPost]
+        [ValidateModel]
         public async Task<IActionResult> Create([FromBody] AddWalksDto addWalksDto)
         {
             //map dto to domain
@@ -48,6 +50,7 @@ namespace NewZealandWalks.API.Controllers
         public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
 
+
             var walkDomain = await _walkRepository.GetByIdAsync(id);
 
             if (walkDomain == null)
@@ -60,9 +63,13 @@ namespace NewZealandWalks.API.Controllers
         }
 
         [HttpPut]
+        [ValidateModel]
         [Route("{id:Guid}")]
         public async Task<IActionResult> Update([FromRoute] Guid id, UpdateWalkDto updateWalkDto)
         {
+
+
+
             //map dto to domain model  
 
             var walkDomain = _mapper.Map<Walk>(updateWalkDto);
@@ -76,6 +83,7 @@ namespace NewZealandWalks.API.Controllers
             //map domain todto
 
             return Ok(_mapper.Map<WalkToDisplayDto>(walkDomain));
+
 
         }
 
