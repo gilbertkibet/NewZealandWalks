@@ -35,12 +35,11 @@ namespace NewZealandWalks.API.Controllers
             return Ok(walkToDisplay);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
+        [HttpGet] //\?FilterOn=Name&&filterQuery=Track&pageNumber=1&pageSize=10
+        public async Task<IActionResult> GetAll([FromQuery] string? filterOn, [FromQuery] string? filterQuery, [FromQuery] string? sortBy, [FromQuery] bool? isAscending, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
         {
-            var walksDomain = await _walkRepository.GetAllAsync();
+            var walksDomain = await _walkRepository.GetAllAsync(filterOn, filterQuery, sortBy, isAscending ?? true, pageNumber, pageSize);
 
-            //map
 
             return Ok(_mapper.Map<List<WalkToDisplayDto>>(walksDomain));
         }
@@ -49,7 +48,6 @@ namespace NewZealandWalks.API.Controllers
         [Route("{id:Guid}")]
         public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
-
 
             var walkDomain = await _walkRepository.GetByIdAsync(id);
 

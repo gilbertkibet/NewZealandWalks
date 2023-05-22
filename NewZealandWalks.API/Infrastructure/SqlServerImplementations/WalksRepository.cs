@@ -40,10 +40,42 @@ namespace NewZealandWalks.API.Infrastructure.SqlServerImplementations
             return walkToDelete;
         }
 
-        public async Task<List<Walk>> GetAllAsync()
+        public async Task<List<Walk>> GetAllAsync(string? filterOn = null, string? filterQuery = null, string? sortBy = null, bool isAscending = true, int pageNumber = 1, int pageSize = 10)
         {
-            return await _context.Walks.Include("Difficulty").Include("Region").ToListAsync();
+
+
+            //   return await _context.Walks.Include("Difficulty").Include("Region").ToListAsync();
             //  return await _context.Walks.Include(x=>x.Difficulty).Include(x=>x.Region).ToListAsync();
+
+            var walks = _context.Walks.Include("Difficulty").Include("Region").AsQueryable();
+
+            //Filtering filter based on column and quuery which 
+            if (string.IsNullOrWhiteSpace(filterOn) == false && string.IsNullOrWhiteSpace(filterQuery) == false)
+            {
+                if (filterOn.Equals("Name", StringComparison.OrdinalIgnoreCase))
+                {
+                    walks = walks.Where(x => x.Name.Contains(filterQuery));
+                }
+
+            }
+            //sorting by name 
+
+            if (string.IsNullOrWhiteSpace(sortBy) == false)
+            {
+                if (sortBy.Equals("Name", StringComparison.OrdinalIgnoreCase))
+                {
+                    walks = isAscending ? walks.OrderBy(x => x.Name) : walks.OrderByDescending(x => x.Name);
+                }
+                else if (sortBy.Equals("Length", StringComparison.OrdinalIgnoreCase))
+                {
+                    walks = isAscending ? walks.OrderBy(x => x.LengthInKm) : walks.OrderByDescending(x => x.LengthInKm);
+                }
+            }
+
+            //paginattion if has been asked for 
+            var skipResults = (pageNumber - 1) * pageSize;
+
+            return await walks.Skip(skipResults).Take(pageSize).ToListAsync();
         }
 
         public async Task<Walk?> GetByIdAsync(Guid id)
