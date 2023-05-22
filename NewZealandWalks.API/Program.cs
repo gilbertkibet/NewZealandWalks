@@ -3,6 +3,7 @@ using NewZealandWalks.API.Core.Repository;
 using NewZealandWalks.API.Helpers;
 using NewZealandWalks.API.Infrastructure.Data;
 using NewZealandWalks.API.Infrastructure.Implementations;
+using NewZealandWalks.API.Infrastructure.SqlServerImplementations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,7 @@ builder.Services.AddDbContext<NewZealandWalksDbContext>(options => options.UseSq
 
 //INJECTIIN REPOSITORY so that we can use anywhere in the application
 builder.Services.AddScoped<IRegionRepository, RegionRepository>();
+builder.Services.AddScoped<IWalkRepository, WalksRepository>();
 
 //AUTOMAAPPER injecting outmapper to the  builder to scan all the mapping when the application starts
 

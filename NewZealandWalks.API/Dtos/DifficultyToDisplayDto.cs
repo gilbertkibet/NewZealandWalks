@@ -1,10 +1,9 @@
-﻿namespace NewZealandWalks.API.Core.Entities
+﻿namespace NewZealandWalks.API.Dtos
 {
-    public class Difficulty
+    public class DifficultyToDisplayDto
     {
         public Guid Id { get; set; }
 
         public string Name { get; set; }
-
     }
 }
