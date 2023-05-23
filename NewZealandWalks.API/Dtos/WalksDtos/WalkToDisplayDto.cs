@@ -1,4 +1,5 @@
-﻿using NewZealandWalks.API.Dtos.RegionsDtos;
+﻿using NewZealandWalks.API.Dtos.Difficulty;
+using NewZealandWalks.API.Dtos.RegionsDtos;
 
 namespace NewZealandWalks.API.Dtos.WalksDtos
 {

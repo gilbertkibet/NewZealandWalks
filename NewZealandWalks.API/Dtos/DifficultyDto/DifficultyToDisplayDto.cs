@@ -1,4 +1,4 @@
-﻿namespace NewZealandWalks.API.Dtos
+﻿namespace NewZealandWalks.API.Dtos.Difficulty
 {
     public class DifficultyToDisplayDto
     {

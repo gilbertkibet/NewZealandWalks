@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using NewZealandWalks.API.Core.Entities;
-using NewZealandWalks.API.Dtos;
+using NewZealandWalks.API.Dtos.Difficulty;
 using NewZealandWalks.API.Dtos.RegionsDtos;
 using NewZealandWalks.API.Dtos.WalksDtos;
 
