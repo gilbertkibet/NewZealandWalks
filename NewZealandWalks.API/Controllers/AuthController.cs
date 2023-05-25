@@ -57,6 +57,7 @@ namespace NewZealandWalks.API.Controllers
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
             var user = await _userManager.FindByEmailAsync(loginDto.Username);
+
             if (user != null)
             {
                 var checkpasswordresult = await _userManager.CheckPasswordAsync(user, loginDto.Password);

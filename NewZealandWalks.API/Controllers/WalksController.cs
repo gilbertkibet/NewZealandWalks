@@ -4,6 +4,8 @@ using NewZealandWalks.API.Core.Entities;
 using NewZealandWalks.API.Core.Repository;
 using NewZealandWalks.API.Dtos.WalksDtos;
 using NewZealandWalks.API.Helpers;
+using System.Net;
+using System.Text.Json;
 
 namespace NewZealandWalks.API.Controllers
 {
@@ -13,12 +15,14 @@ namespace NewZealandWalks.API.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IWalkRepository _walkRepository;
+        private readonly ILogger<WalksController> _logger;
 
-        public WalksController(IMapper mapper, IWalkRepository walkRepository)
+        public WalksController(IMapper mapper, IWalkRepository walkRepository,ILogger<WalksController> logger)
         {
             _mapper = mapper;
 
             _walkRepository = walkRepository;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -38,10 +42,19 @@ namespace NewZealandWalks.API.Controllers
         [HttpGet] //\?FilterOn=Name&&filterQuery=Track&pageNumber=1&pageSize=10
         public async Task<IActionResult> GetAll([FromQuery] string? filterOn, [FromQuery] string? filterQuery, [FromQuery] string? sortBy, [FromQuery] bool? isAscending, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
         {
-            var walksDomain = await _walkRepository.GetAllAsync(filterOn, filterQuery, sortBy, isAscending ?? true, pageNumber, pageSize);
+            
+            
+              
 
+                var walksDomain = await _walkRepository.GetAllAsync(filterOn, filterQuery, sortBy, isAscending ?? true, pageNumber, pageSize);
+            //create excpetion
 
-            return Ok(_mapper.Map<List<WalkToDisplayDto>>(walksDomain));
+                return Ok(_mapper.Map<List<WalkToDisplayDto>>(walksDomain));
+            
+          
+
+                
+            
         }
 
         [HttpGet]

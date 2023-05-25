@@ -5,6 +5,7 @@ using NewZealandWalks.API.Core.Entities;
 using NewZealandWalks.API.Core.Repository;
 using NewZealandWalks.API.Dtos.RegionsDtos;
 using NewZealandWalks.API.Helpers;
+using System.Text.Json;
 
 namespace NewZealandWalks.API.Controllers
 {
@@ -16,25 +17,30 @@ namespace NewZealandWalks.API.Controllers
         private readonly IRegionRepository _regionRepository;
 
         private readonly IMapper _mapper;
+        private readonly ILogger<RegionsController> _logger;
 
-        public RegionsController(IRegionRepository regionRepository, IMapper mapper)
+        public RegionsController(IRegionRepository regionRepository, IMapper mapper,ILogger <RegionsController> logger)
         {
 
             _regionRepository = regionRepository;
 
             _mapper = mapper;
+            _logger = logger;
         }
         //GET:https://localhost:portnumber/api/regions
         [HttpGet]
-        [Authorize(Roles = "Reader")]
+        //[Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetAll()
         {
+            _logger.LogInformation("The get all action method was invoked");
             //get data from database
             //map the domain models to display dtos
             //in controller level it is destination then source
             //in mapping profile it is source to destination
             //return dtos back to the client
             var regions = await _regionRepository.GetAllAsync();
+
+            _logger.LogInformation($"Finished get all get all with {JsonSerializer.Serialize(regions)}");
 
             return Ok(_mapper.Map<List<RegionToDisplayDto>>(regions));
 
